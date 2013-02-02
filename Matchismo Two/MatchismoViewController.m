@@ -7,23 +7,35 @@
 //
 
 #import "MatchismoViewController.h"
+#import "PlayingCardDeck.h"
+#import "PlayingCard.h"
 
 @interface MatchismoViewController ()
-
+@property (weak, nonatomic) IBOutlet UIButton *shownCard;
+@property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
+@property (nonatomic) int flipCount;
+@property (strong, nonatomic) PlayingCardDeck *deck;
 @end
 
 @implementation MatchismoViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+- (Deck *) deck {
+    if(! _deck) _deck = [[PlayingCardDeck alloc] init];
+    return _deck;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void) setFlipCount:(int)flipCount {
+    _flipCount = flipCount;
+    self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
 }
 
+- (IBAction)flipCard:(UIButton *)sender {
+    if (!sender.selected) {
+        // back showing, set front to a new card
+        PlayingCard *newCard = [self.deck drawRandomCard];
+        [self.shownCard setTitle:newCard.contents forState:UIControlStateSelected];
+    }
+    sender.selected = ! sender.selected;
+    self.flipCount++;
+}
 @end
