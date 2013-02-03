@@ -21,13 +21,32 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *gameStateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastMovePointsLabel;
+
 @end
 
 @implementation MatchismoViewController
+- (IBAction)matchTwoSelect:(id)sender {
+    self.game.matchCount = 2;
+}
+
+- (IBAction)matchThreeSelect:(id)sender {
+    self.game.matchCount = 3;
+}
+
+- (IBAction)resetGame:(id)sender {
+    self.flipCount = 0;
+    self.game = nil;
+    [self updateUI];
+    self.gameStateLabel.text = @"Let's go again!";
+    self.lastMovePointsLabel.text = @"";
+}
 
 - (CardMatchingGame *) game {
-    if (!_game) _game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtons.count
-                                                          usingDeck:[[PlayingCardDeck alloc] init]];
+    if (!_game) _game =
+        [[CardMatchingGame alloc]
+                         initWithCardCount:self.cardButtons.count
+                                 usingDeck:[[PlayingCardDeck alloc] init]
+                                matchCount:2];
     return _game;
 }
 

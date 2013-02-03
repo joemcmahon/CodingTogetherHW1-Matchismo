@@ -13,7 +13,8 @@
 
 // designated initializer
 - (id) initWithCardCount:(NSUInteger)cardCount
-              usingDeck:(Deck *)deck;
+              usingDeck:(Deck *)deck
+              matchCount:(NSUInteger)matchCount;
 
 - (void) flipCardAtIndex:(NSUInteger)index;
 
@@ -22,5 +23,6 @@
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) NSString *lastMove;
 @property (nonatomic, readonly) int pointsForMove;
+@property (nonatomic) int matchCount;
 
 @end

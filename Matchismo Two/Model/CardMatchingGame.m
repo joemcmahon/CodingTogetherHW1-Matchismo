@@ -20,18 +20,26 @@
 @property (nonatomic, readwrite) int score;
 @property (nonatomic, readwrite) NSString *lastMove;
 @property (nonatomic, readwrite) int pointsForMove;
+@property (nonatomic) int cardsFaceUp;
 @end
 
 @implementation CardMatchingGame
+
+- (void) setMatchCount:(int)matchCount {
+    if (matchCount > 3) matchCount = 3;
+    if (matchCount < 2) matchCount = 2;
+    _matchCount = matchCount;
+}
 
 - (NSMutableArray *)cards {
     if (! _cards) _cards = [[NSMutableArray alloc] init];
     return _cards;
 }
 
-- (id) initWithCardCount:(NSUInteger)cardCount usingDeck:(Deck *)deck {
+- (id) initWithCardCount:(NSUInteger)cardCount usingDeck:(Deck *)deck matchCount:(NSUInteger)matchCount{
     self = [super init];
     if (self) {
+        self.matchCount = matchCount;
         for (int i = 0; i < cardCount; i++) {
             Card *card = [deck drawRandomCard];
             if (!card) {
