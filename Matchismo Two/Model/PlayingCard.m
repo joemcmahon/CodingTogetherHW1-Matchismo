@@ -31,6 +31,21 @@
     return [self rankStrings].count - 1;
 }
 
+- (int)match:(NSArray *)otherCards {
+    int score = 0;
+    if (otherCards.count == 1) {
+        PlayingCard *otherCard = [otherCards lastObject];
+        NSLog(@"matching %@ and %@", self.contents, otherCard.contents);
+        if ([otherCard.suit isEqualToString:self.suit]) {
+            score = 1;
+        }
+        else if (otherCard.rank == self.rank) {
+            score = 4;
+        }
+    }
+    NSLog(@"score for the match is %d", score);
+    return score;
+}
 - (NSString *)contents {
     return [[PlayingCard rankStrings][self.rank] stringByAppendingString:self.suit];
 }

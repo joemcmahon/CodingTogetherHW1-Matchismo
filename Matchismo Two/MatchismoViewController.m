@@ -7,21 +7,31 @@
 //
 
 #import "MatchismoViewController.h"
+#import "Deck.h"
 #import "PlayingCardDeck.h"
 #import "PlayingCard.h"
+#import "CardMatchingGame.h"
 
 @interface MatchismoViewController ()
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UIButton *shownCard;
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (nonatomic) int flipCount;
-@property (strong, nonatomic) PlayingCardDeck *deck;
+@property (strong, nonatomic) CardMatchingGame *game;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @end
 
 @implementation MatchismoViewController
 
-- (Deck *) deck {
-    if(! _deck) _deck = [[PlayingCardDeck alloc] init];
-    return _deck;
+- (CardMatchingGame *) game {
+    if (!_game) _game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtons.count
+                                                          usingDeck:[[PlayingCardDeck alloc] init]];
+    return _game;
+}
+
+- (void) setCardButtons:(NSArray *)cardButtons{
+    _cardButtons = cardButtons;
+    [self updateUI];
 }
 
 - (void) setFlipCount:(int)flipCount {
@@ -29,13 +39,24 @@
     self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
 }
 
-- (IBAction)flipCard:(UIButton *)sender {
-    if (!sender.selected) {
-        // back showing, set front to a new card
-        PlayingCard *newCard = [self.deck drawRandomCard];
-        [self.shownCard setTitle:newCard.contents forState:UIControlStateSelected];
+- (void) updateUI {
+    for (UIButton *cardButton in self.cardButtons) {
+        Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
+        [cardButton setTitle:card.contents
+                    forState:UIControlStateSelected];
+        [cardButton setTitle:card.contents
+                    forState:UIControlStateSelected|UIControlStateDisabled];
+        cardButton.selected = card.isFaceUp;
+        cardButton.enabled = ! card.isUnplayable;
+        cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
     }
-    sender.selected = ! sender.selected;
-    self.flipCount++;
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
 }
+
+- (IBAction)flipCard:(UIButton *)sender {
+    [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
+    self.flipCount++;
+    [self updateUI];
+}
+
 @end
