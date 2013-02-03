@@ -18,6 +18,8 @@
 @interface CardMatchingGame()
 @property (strong, nonatomic) NSMutableArray *cards;
 @property (nonatomic, readwrite) int score;
+@property (nonatomic, readwrite) NSString *lastMove;
+@property (nonatomic, readwrite) int pointsForMove;
 @end
 
 @implementation CardMatchingGame
@@ -49,34 +51,38 @@
 }
 
 - (void) flipCardAtIndex:(NSUInteger)index {
-    NSLog(@"score currently %d", self.score);
-    
     Card *card = [self cardAtIndex:index];
+    BOOL stateChanged = NO;
     
     if (! card.isUnplayable) {
         if (! card.isFaceUp) {
             for (Card *otherCard in self.cards) {
                 if (otherCard.isFaceUp && !otherCard.isUnplayable) {
                     int matchScore = [card match:@[otherCard]];
+                    stateChanged = YES;
                     if (matchScore) {
                         otherCard.unplayable = YES;
                         card.unplayable = YES;
-                        self.score += matchScore * MATCH_BONUS;
-                        NSLog(@"bumped score by %d", matchScore * MATCH_BONUS);
+                        self.pointsForMove = matchScore * MATCH_BONUS;
+                        self.score += self.pointsForMove;
+                        self.lastMove = [NSString stringWithFormat:@"%@ matched %@", card.contents, otherCard.contents];
                     }
                     else {
                         otherCard.faceUp = NO;
-                        self.score -= MISMATCH_PENALTY;
-                        NSLog(@"took the mismatch hit of 2");
+                        self.pointsForMove = -MISMATCH_PENALTY;
+                        self.score += self.pointsForMove;
+                        self.lastMove = [NSString stringWithFormat:@"%@ and %@ don't match", card.contents, otherCard.contents];
                     }
                     break;
                 }
             }
             self.score -= FLIP_COST;
-            NSLog(@"took the reveal hit of 1");
+            if (! stateChanged) {
+                self.lastMove = [NSString stringWithFormat:  @"Flipped up %@", card.contents];
+                self.pointsForMove -= FLIP_COST;
+            }
         }
         card.faceUp = ! card.faceUp;
     }
-    NSLog(@"score is now %d", self.score);
 }
 @end

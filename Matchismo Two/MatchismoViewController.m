@@ -19,6 +19,8 @@
 @property (nonatomic) int flipCount;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *gameStateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lastMovePointsLabel;
 @end
 
 @implementation MatchismoViewController
@@ -51,6 +53,8 @@
         cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    self.gameStateLabel.text = self.game.lastMove;
+    self.lastMovePointsLabel.text = [NSString stringWithFormat:@"%@%d points", self.game.pointsForMove > 0 ? @"+" : @"", self.game.pointsForMove];
 }
 
 - (IBAction)flipCard:(UIButton *)sender {

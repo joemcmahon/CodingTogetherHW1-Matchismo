@@ -20,5 +20,7 @@
 -(Card *)cardAtIndex:(NSUInteger)index;
 
 @property (nonatomic, readonly) int score;
+@property (nonatomic, readonly) NSString *lastMove;
+@property (nonatomic, readonly) int pointsForMove;
 
 @end
