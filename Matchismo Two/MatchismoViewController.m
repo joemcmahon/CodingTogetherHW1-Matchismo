@@ -21,16 +21,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *gameStateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastMovePointsLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *cardCountSwitch;
 
 @end
 
 @implementation MatchismoViewController
-- (IBAction)matchTwoSelect:(id)sender {
-    self.game.matchCount = 2;
-}
 
-- (IBAction)matchThreeSelect:(id)sender {
-    self.game.matchCount = 3;
+- (IBAction)setMatchCount:(UISegmentedControl *)sender {
+    self.game.matchCount = [sender selectedSegmentIndex] + 2;
+    NSLog(@"match count %d", self.game.matchCount);
 }
 
 - (IBAction)resetGame:(id)sender {

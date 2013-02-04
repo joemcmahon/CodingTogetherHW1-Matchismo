@@ -33,16 +33,22 @@
 
 - (int)match:(NSArray *)otherCards {
     int score = 0;
-    if (otherCards.count == 1) {
-        PlayingCard *otherCard = [otherCards lastObject];
+    for (PlayingCard *otherCard in otherCards) {
         NSLog(@"matching %@ and %@", self.contents, otherCard.contents);
         if ([otherCard.suit isEqualToString:self.suit]) {
-            score = 1;
+            score += 1;
         }
         else if (otherCard.rank == self.rank) {
-            score = 4;
+            score += 4;
         }
     }
+    if (score > 0 && [otherCards count] > 1) {
+        NSMutableArray *recalcCards = [NSMutableArray arrayWithArray:otherCards];
+        PlayingCard *testCard = [recalcCards lastObject];
+        [recalcCards removeObject:testCard];
+        score += [testCard match:recalcCards];
+    }
+
     NSLog(@"score for the match is %d", score);
     return score;
 }
