@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		714C18D916BFA8A800C228C8 /* cardback.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C18D816BFA8A800C228C8 /* cardback.png */; };
 		71A8C30116BDC5BA003DD9DF /* CardMatchingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A8C30016BDC5BA003DD9DF /* CardMatchingGame.m */; };
+		71AE767F16C0B6F0007A1AF5 /* GameMove.m in Sources */ = {isa = PBXBuildFile; fileRef = 71AE767E16C0B6F0007A1AF5 /* GameMove.m */; };
 		71AFFE6916BD7DF700FBE7E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71AFFE6816BD7DF700FBE7E3 /* UIKit.framework */; };
 		71AFFE6B16BD7DF700FBE7E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71AFFE6A16BD7DF700FBE7E3 /* Foundation.framework */; };
 		71AFFE6D16BD7DF700FBE7E3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71AFFE6C16BD7DF700FBE7E3 /* CoreGraphics.framework */; };
@@ -45,6 +46,8 @@
 		714C18D816BFA8A800C228C8 /* cardback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cardback.png; path = "Matchismo Two/cardback.png"; sourceTree = "<group>"; };
 		71A8C2FF16BDC5BA003DD9DF /* CardMatchingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardMatchingGame.h; path = "Matchismo Two/Model/CardMatchingGame.h"; sourceTree = "<group>"; };
 		71A8C30016BDC5BA003DD9DF /* CardMatchingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardMatchingGame.m; path = "Matchismo Two/Model/CardMatchingGame.m"; sourceTree = "<group>"; };
+		71AE767D16C0B6F0007A1AF5 /* GameMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameMove.h; path = "Matchismo Two/Model/GameMove.h"; sourceTree = "<group>"; };
+		71AE767E16C0B6F0007A1AF5 /* GameMove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameMove.m; path = "Matchismo Two/Model/GameMove.m"; sourceTree = "<group>"; };
 		71AFFE6516BD7DF700FBE7E3 /* Matchismo Two.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Matchismo Two.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		71AFFE6816BD7DF700FBE7E3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		71AFFE6A16BD7DF700FBE7E3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -188,6 +191,8 @@
 				71AFFEAD16BD81D900FBE7E3 /* PlayingCardDeck.m */,
 				71A8C2FF16BDC5BA003DD9DF /* CardMatchingGame.h */,
 				71A8C30016BDC5BA003DD9DF /* CardMatchingGame.m */,
+				71AE767D16C0B6F0007A1AF5 /* GameMove.h */,
+				71AE767E16C0B6F0007A1AF5 /* GameMove.m */,
 			);
 			name = Model;
 			path = ..;
@@ -334,6 +339,7 @@
 				71AFFEAB16BD81C600FBE7E3 /* Deck.m in Sources */,
 				71AFFEAE16BD81D900FBE7E3 /* PlayingCardDeck.m in Sources */,
 				71A8C30116BDC5BA003DD9DF /* CardMatchingGame.m in Sources */,
+				71AE767F16C0B6F0007A1AF5 /* GameMove.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

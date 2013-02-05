@@ -11,18 +11,20 @@
 #import "PlayingCardDeck.h"
 #import "PlayingCard.h"
 #import "CardMatchingGame.h"
+#import "math.h"
 
 @interface MatchismoViewController ()
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UIButton *shownCard;
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (nonatomic) int flipCount;
+@property (nonatomic) int movePoints;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *gameStateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastMovePointsLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *cardCountSwitch;
-@property (strong, nonatomic) IBOutlet UISlider *historySlider;
+@property (weak, nonatomic) IBOutlet UISlider *historySlider;
 @property (strong, nonatomic) NSMutableArray *gameStates;
 
 @end
@@ -54,17 +56,34 @@
     return _game;
 }
 
-#pragma mark History slider
+#pragma mark Flipcount message
 
 - (void) setFlipCount:(int)flipCount {
     _flipCount = flipCount;
     self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
 }
 
-- (IBAction)sweepThroughHistory:(UISlider *)sender {
+- (void) setMovePoints:(int)movePoints {
+    self.lastMovePointsLabel.text = [NSString stringWithFormat:@"%@%d points", self.game.pointsForMove > 0 ? @"+" : @"", self.game.pointsForMove];
 }
 
-#pragma mark Segmented control 
+#pragma mark History slider
+
+- (NSString *)extractGameState:(int)index {
+    if (index >= [self.gameStates count]) {
+        return [self.gameStates lastObject];
+    }
+    return self.gameStates[index];
+}
+
+- (IBAction)sweepThroughHistory:(UISlider *)sender {
+    NSUInteger stateIndex = (int)(sender.value);
+    self.gameStateLabel.text = [self extractGameState:stateIndex];
+    float alpha = sender.value < sender.maximumValue ? 0.4 : 1.0;
+    self.gameStateLabel.alpha = alpha;
+}
+
+#pragma mark Segmented control
 
 - (IBAction)setMatchCount:(UISegmentedControl *)sender {
     self.game.matchCount = [sender selectedSegmentIndex] + 2;
@@ -93,6 +112,9 @@
     
     // Display everything.
     [self updateUI];
+    
+    self.historySlider.maximumValue = 0.0;
+    self.historySlider.minimumValue = 0.0;
 
 }
 
@@ -121,7 +143,10 @@
     // Update status messages.
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     self.gameStateLabel.text = self.game.lastMove;
-    self.lastMovePointsLabel.text = [NSString stringWithFormat:@"%@%d points", self.game.pointsForMove > 0 ? @"+" : @"", self.game.pointsForMove];
+    [self.gameStates addObject:self.game.lastMove];
+    self.historySlider.maximumValue = (float)[self.gameStates count];
+    self.historySlider.value = self.historySlider.maximumValue;
+    self.movePoints = self.game.pointsForMove;
 }
 
 #pragma mark Card flipping

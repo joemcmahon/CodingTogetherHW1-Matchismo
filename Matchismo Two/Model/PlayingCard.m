@@ -60,7 +60,7 @@
 
 - (int)match:(NSArray *)otherCards {
     // Initial score (defaults to zero).
-    int score;
+    int score = 0;
     
     // Match the current card against all the other face-up cards. We need
     // to do this match first to ensure we haven't just added a new non-matching

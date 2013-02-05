@@ -10,6 +10,7 @@
 #import "Deck.h"
 #import "Card.h"
 #import "PlayingCard.h"
+#import "GameMove.h"
 
 #define MATCH_BONUS         4
 #define MISMATCH_PENALTY    2
@@ -40,6 +41,11 @@
     // Tracks the cards that have been turned face up so far.
     if(!_cardsFaceUp) _cardsFaceUp = [[NSMutableArray alloc] init];
     return _cardsFaceUp;
+}
+
+- (NSString *)lastMove {
+    if (!_lastMove) _lastMove = @"";
+    return _lastMove;
 }
 
 #pragma mark Designated initializer
