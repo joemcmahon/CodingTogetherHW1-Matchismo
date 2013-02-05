@@ -20,9 +20,17 @@
 
 -(Card *)cardAtIndex:(NSUInteger)index;
 
-@property (nonatomic, readonly) int score;
-@property (nonatomic, readonly) NSString *lastMove;
-@property (nonatomic, readonly) int pointsForMove;
+// Set this to change the number of cards per match
 @property (nonatomic) int matchCount;
+
+// Current game score
+@property (nonatomic, readonly) int score;
+
+// Point score/cost of the last move
+@property (nonatomic, readonly) int pointsForMove;
+
+// Text representation of the last move
+@property (nonatomic, readonly) NSString *lastMove;
+
 
 @end
